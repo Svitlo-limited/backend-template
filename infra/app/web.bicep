@@ -15,7 +15,7 @@ resource applicationInsights 'Microsoft.Insights/components@2020-02-02' existing
   name: applicationInsightsName
 }
 
-resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
+resource containerApp 'Microsoft.App/containerApps@2023-04-01' = {
   name: name
   location: location
   tags: union(tags, { 'azd-service-name': serviceName })
@@ -33,13 +33,6 @@ resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
           }
         ]
         allowInsecure: false
-        additionalPortMappings: [
-          {
-            external: false
-            targetPort: 1488
-            exposedPort: 1488
-          }
-        ]
       }
       registries: [
         {
@@ -55,7 +48,7 @@ resource containerApp 'Microsoft.App/containerApps@2022-11-01-preview' = {
           name: 'main'
           image: !empty(imageName) ? imageName : 'nginx:latest'
           resources: {
-            cpu: '0.5'
+            cpu: 1  // Updated to integer
             memory: '1.0Gi'
           }
           env: [
