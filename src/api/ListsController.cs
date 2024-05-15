@@ -32,6 +32,12 @@ public class ListsController : ControllerBase
         return Ok(await _repository.GetListsAsync(skip, batchSize));
     }
 
+    [HttpGet("test")]
+    [ProducesResponseType(200)]
+    public async Task<ActionResult> TestAsync(){
+        return Ok("test");
+    }
+
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<ActionResult> CreateList([FromBody]CreateUpdateTodoList list)
